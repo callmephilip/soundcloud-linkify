@@ -1,0 +1,30 @@
+{
+  "name": "Soundcloud Linkify",
+  "version": "0.1",
+  "manifest_version": 2,
+  "description": "Linkifying Soundcloud",
+
+  "permissions": [
+    "tabs"
+  ],
+
+  "page_action": {
+    "default_icon" : "images/icon-19.png",
+    "default_title": "Soundcloud Linkify"
+  },
+
+  "background": {
+    "scripts" : ["scripts/chrome/background.js"]
+  },
+
+  "content_scripts": [
+    {
+      "matches" : [
+        "http://soundcloud.com/*", "https://soundcloud.com/*"
+      ],
+      "js" : ["scripts/chrome/content.js"],
+      "run_at" : "document_idle",
+      "all_frames" : false
+    }
+  ]
+}
