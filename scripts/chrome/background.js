@@ -1,5 +1,19 @@
-(function(){
-    
+require.config({
+  shim: {
+    'underscore' : { exports : '_' },
+    'backbone' : { deps : ['underscore'], exports : 'Backbone' },
+    'handlebars' : { exports : 'Handlebars' }
+  },
+
+  paths: {
+    'jquery': 'scripts/vendor/jquery.min',
+    'underscore': 'scripts/vendor/underscore',
+    'backbone': 'scripts/vendor/backbone',
+    'handlebars': 'scripts/vendor/handlebars'
+  }
+});
+ 
+require(['jquery'], function($) {
     function run(tab){
         if(typeof tab !== 'undefined'){
             
@@ -37,5 +51,4 @@
             run(t);
         });
     });
-
-})();
+});

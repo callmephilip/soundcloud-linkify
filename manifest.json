@@ -14,7 +14,7 @@
   },
 
   "background": {
-    "scripts" : ["scripts/chrome/background.js"]
+    "scripts" : ["scripts/vendor/require.js", "scripts/chrome/background.js"]
   },
 
   "content_scripts": [
