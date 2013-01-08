@@ -21,9 +21,9 @@
 
   <script>
     mocha.setup({ ui : "bdd", ignoreLeaks : true});
-    //expect = chai.expect;
+    expect = chai.expect;
 
-    var specs = ["../../spec/test.setup.spec"];
+    var specs = [ "../../spec/test.setup.spec" ];
 
     require(specs,function(){
         setTimeout(function(){
