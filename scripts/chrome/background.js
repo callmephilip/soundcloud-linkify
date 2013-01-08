@@ -1,5 +1,5 @@
 require.config({
-  baseUrl : "../",
+  baseUrl : "scripts",
   shim: {
     'underscore' : { exports : '_' },
     'backbone' : { deps : ['underscore'], exports : 'Backbone' },
@@ -7,10 +7,11 @@ require.config({
   },
 
   paths: {
-    'jquery': 'scripts/vendor/jquery.min',
-    'underscore': 'scripts/vendor/underscore',
-    'backbone': 'scripts/vendor/backbone',
-    'handlebars': 'scripts/vendor/handlebars'
+    'jquery': 'vendor/jquery.min',
+    'underscore': 'vendor/underscore',
+    'backbone': 'vendor/backbone',
+    'handlebars': 'vendor/handlebars',
+    'text': 'vendor/text' 
   }
 });
  
@@ -63,8 +64,6 @@ require(['jquery'], function($) {
                     }
                 }
             });
-
-            
         }
     }
 
