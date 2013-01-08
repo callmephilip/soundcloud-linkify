@@ -1,4 +1,5 @@
 require.config({
+  baseUrl : "../",
   shim: {
     'underscore' : { exports : '_' },
     'backbone' : { deps : ['underscore'], exports : 'Backbone' },
@@ -14,6 +15,11 @@ require.config({
 });
  
 require(['jquery'], function($) {
+
+    function testing(){
+        return $("#mocha").length !== 0;
+    }
+
     function run(tab){
         if(typeof tab !== 'undefined'){
             
@@ -44,11 +50,13 @@ require(['jquery'], function($) {
         }
     }
 
-    // content script pings background asking it to start the app
-    chrome.extension.onRequest.addListener(function(request, sender, sendResponse){
-        sendResponse({});
-        chrome.tabs.getSelected(null,function(t){
-            run(t);
+    if(!testing()){
+        // content script pings background asking it to start the app
+        chrome.extension.onRequest.addListener(function(request, sender, sendResponse){
+            sendResponse({});
+            chrome.tabs.getSelected(null,function(t){
+                run(t);
+            });
         });
-    });
+    }
 });
