@@ -20,6 +20,15 @@ require(['jquery'], function($) {
         return $("#mocha").length !== 0;
     }
 
+
+    //schedule tab inspection
+    function inspect(tab){
+        chrome.tabs.sendMessage(tab.id, { what : "inspect" }, function(response){
+            console.log("got content", response);
+        });
+    }
+
+
     function run(tab){
         if(typeof tab !== 'undefined'){
             
@@ -31,18 +40,27 @@ require(['jquery'], function($) {
             };
 
 
+            var urls = [
+                tab.url
+            ];
+
             //keep an eye on the current tab to monitor navigation around the site
             chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
                 if(tab.id !== context.tab.id){ return; }
-                
+             
+                if(typeof changeInfo.url !== 'undefined'){
+                    if(urls.indexOf(changeInfo.url) === -1){
+                        urls.push(changeInfo.url);
+                    }
+                }
+
                 if(changeInfo.status === 'complete'){
                     // url has changed and the content is loaded
-                    if(context.inspectedUrl !== tab.url){
-                        //chrome will fire updated event with status 'complete' several times 
-                        //for the same url
-                        context.inspectedUrl = tab.url;
+                    if(urls.indexOf(tab.url) !== -1){
+                        urls.splice(urls.indexOf(tab.url),1);
                         console.log("current tab updated",tab);
-                    }   
+                        inspect(tab);                        
+                    }
                 }
             });
 
