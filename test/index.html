@@ -23,7 +23,10 @@
     mocha.setup({ ui : "bdd", ignoreLeaks : true});
     expect = chai.expect;
 
-    var specs = [ "../../spec/test.setup.spec" ];
+    var specs = [ 
+      "../../spec/test.setup.spec", 
+      "../../spec/parser.spec"
+    ];
 
     require(specs,function(){
         setTimeout(function(){
