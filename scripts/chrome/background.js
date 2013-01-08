@@ -54,7 +54,7 @@ require(['jquery'], function($) {
                     }
                 }
 
-                if(changeInfo.status === 'complete'){
+                if((changeInfo.status === 'complete') && (typeof tab.favIconUrl !== 'undefined')){
                     // url has changed and the content is loaded
                     if(urls.indexOf(tab.url) !== -1){
                         urls.splice(urls.indexOf(tab.url),1);
