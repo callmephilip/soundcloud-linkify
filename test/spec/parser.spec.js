@@ -27,9 +27,10 @@ define(["parser"], function(Parser){
 
                     console.log("results", results);
 
-                    expect(results.length).to.equal(expected.length);
+                    expect(results.length >= expected.length).to.be.true;
 
                     for(var i=0; i<expected.length; i++){
+                        console.log("checking : " + expected[i]);
                         expect(results.indexOf(expected[i])).to.not.equal(-1);
                     }
 
@@ -45,6 +46,10 @@ define(["parser"], function(Parser){
 
             it("can parse number- artist -title -label", function(done){
                 testSample("number-artist-title-label.html", "number-artist-title-label.artists", done);
+            });
+
+            it("can parse tons of paragraphs", function(done){
+                testSample("tons.of.paragraphs.html", "tons.of.paragraphs.artists", done);
             });
 
         });
