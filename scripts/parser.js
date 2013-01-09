@@ -1,5 +1,31 @@
-define([],function(){
+define(["jquery", "underscore"],function($,_){
     
+    function getParagraphs(content){
+        var wrapper = jQuery("<div></div>").html(content);
+        return _.map($(wrapper).children("p"), function(p){
+            return $(p).html();
+        });
+    }
+
+    function getLines(content){
+
+        function cleanLine(l){
+            //no links
+            return l.replace(/<a\b[^>]*>(.*?)<\/a>/i,"");
+        }
+
+        var paragraphs = getParagraphs(content), lines = [];
+
+        for(var i=0; i<paragraphs.length; i++){
+            var ls = paragraphs[i].split('<br>');
+            for(var j=0; j<ls.length; j++){
+                lines.push(cleanLine(ls[j]));
+            }
+        }
+
+        return lines;
+    }
+
     function match(str,exp){
         return exp.exec(str);
     }
@@ -24,12 +50,26 @@ define([],function(){
     }
 
     var matchers = [
+        //01- THATMANMONKZ -that would be alright -TONE CONTROL
         function(content){
             var m = match(content,/^[0-9]+-\s*([^-]+)-/gi);
-            if(m){
-                return m[1];
-            }
-        }
+            if(m){ return m[1]; }
+        },
+        //Sol Heilo_Hold On_Youtube
+        function(content){
+            var m = match(content,/^([^\_]+)\_/gi);
+            if(m){ return m[1]; }
+        },
+        //The Beatles - The End - Apple Records
+        function(content){
+            var m = match(content,/^([^-]+)-\s*[^-]+-\s*.+$/gi);
+            if(m){ return m[1]; }
+        },
+        //Funk Factory - Rien Ne Va Plus (ATCO Records)
+        function(content){
+            var m = match(content,/^(.{1,50}?)-\s*[^-]+$/gi);
+            if(m){ return m[1]; }
+        },
     ];
 
 
@@ -43,9 +83,10 @@ define([],function(){
             // grab text
             // and split on brs
 
-            var results = [], 
-                tc = $(content).html(),
-                lines = tc.split("<br>");
+            var results = [];
+            var lines = getLines(content);
+
+            console.log("LINES", lines);
 
             //  try different matchers
 
