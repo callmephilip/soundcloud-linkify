@@ -52,8 +52,8 @@ define(["jquery", "underscore"],function($,_){
     var matchers = [
         //01- THATMANMONKZ -that would be alright -TONE CONTROL
         function(content){
-            var m = match(content,/^[0-9\)]+-\s*([^-]+)-/gi);
-            if(m){ return m[1]; }
+            var m = match(content,/^[0-9\)]+(-|\u2013)\s*([^-]+)(-|\u2013)/gi);
+            if(m){ return m[2]; }
         },
         //Sol Heilo_Hold On_Youtube
         function(content){
@@ -62,16 +62,15 @@ define(["jquery", "underscore"],function($,_){
         },
         //[10.] The Beatles - The End - Apple Records
         function(content){
-            var m = match(content,/^[0-9\)]*\.*\s*([^-]+)-\s*[^-]+-\s*.+$/gi);
+            var m = match(content,/^[0-9\)\.]*\s*([^-]+)(-|\u2013)\s*[^-]+(-|\u2013)\s*.+$/gi);
             if(m){ return m[1]; }
         },
         //[10.] Funk Factory - Rien Ne Va Plus (ATCO Records)
         function(content){
-            var m = match(content,/^[0-9\)]*\.*\s*(.{1,50}?)-\s*[^-]+$/gi);
+            var m = match(content,/^[0-9\)\.]*\s*(.{1,50})(-|\u2013)\s*[^-]+$/gi);
             if(m){ return m[1]; }
         },
     ];
-
 
 
     return {
