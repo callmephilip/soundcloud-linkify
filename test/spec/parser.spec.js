@@ -35,6 +35,11 @@ define(["parser","underscore"], function(Parser,_){
                         expect(results.indexOf(expected[i])).to.not.equal(-1);
                     }
 
+                    // no duplicates, please
+
+                    console.log("checking for dupicates");
+
+                    expect(_.uniq(results).length).to.equal(results.length);
 
                     done();
                 });
