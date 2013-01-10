@@ -15,7 +15,7 @@ require.config({
   }
 });
  
-require(['jquery'], function($) {
+require(['jquery','parser'], function($,Parser) {
 
     function testing(){
         return $("#mocha").length !== 0;
@@ -26,6 +26,7 @@ require(['jquery'], function($) {
     function inspect(tab){
         chrome.tabs.sendMessage(tab.id, { what : "inspect" }, function(response){
             console.log("got content", response);
+            console.log("artists identified", Parser.parse(response));
         });
     }
 
