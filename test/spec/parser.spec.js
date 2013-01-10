@@ -58,7 +58,14 @@ define(["parser"], function(Parser){
 
             it("can parse solid-steel-radio-show-21-12", function(done){
                 testSample("solid-steel-radio-show-21-12.html", "solid-steel-radio-show-21-12.artists", done);
+            });
 
+            it("can parse life-in-color-mix", function(done){
+                testSample("life-in-color-mix.html", "life-in-color-mix.artists", done);
+            });
+
+            it("can parse krewella-troll-mix-volume-1", function(done){
+                testSample("krewella-troll-mix-volume-1.html", "krewella-troll-mix-volume-1.artists", done);
             });
 
         });
