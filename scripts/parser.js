@@ -99,7 +99,7 @@ define(["jquery", "underscore"],function($,_){
                 }  
             } 
 
-            return results;            
+            return _.uniq(results);            
         }
     };
 });
