@@ -72,6 +72,14 @@ define(["parser"], function(Parser){
                 testSample("contract-killers-special.html", "contract-killers-special.artists", done);
             });
 
+            it("can parse madeon-minimix-annie-mac-radio", function(done){
+                testSample("madeon-minimix-annie-mac-radio.html", "madeon-minimix-annie-mac-radio.artists", done);
+            });
+
+            it("can parse david-guetta-dj-mix-119", function(done){
+                testSample("david-guetta-dj-mix-119.html", "david-guetta-dj-mix-119.artists", done);
+            });
+
         });
 
    });
