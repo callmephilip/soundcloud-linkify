@@ -1,4 +1,4 @@
-define(["parser"], function(Parser){
+define(["parser","underscore"], function(Parser,_){
    describe("Parser", function(){
 
         describe("module", function(){
@@ -20,19 +20,21 @@ define(["parser"], function(Parser){
                     
                     expected = e.split("\n");
 
-                    console.log("content",c);
-                    console.log("expected",expected);
-
                     var results = Parser.parse(c);
 
+                    console.log("content",c);
+                    console.log("expected",expected);
                     console.log("results", results);
 
+                    // make sure we have at least as many results as expected
+                    // false positives are OK for now 
                     expect(results.length >= expected.length).to.be.true;
 
                     for(var i=0; i<expected.length; i++){
                         console.log("checking : " + expected[i]);
                         expect(results.indexOf(expected[i])).to.not.equal(-1);
                     }
+
 
                     done();
                 });
