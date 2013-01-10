@@ -68,6 +68,10 @@ define(["parser"], function(Parser){
                 testSample("krewella-troll-mix-volume-1.html", "krewella-troll-mix-volume-1.artists", done);
             });
 
+            it("can parse contract-killers-special", function(done){
+                testSample("contract-killers-special.html", "contract-killers-special.artists", done);
+            });
+
         });
 
    });
