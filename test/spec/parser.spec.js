@@ -52,6 +52,15 @@ define(["parser"], function(Parser){
                 testSample("tons.of.paragraphs.html", "tons.of.paragraphs.artists", done);
             });
 
+            it("can parse solid-steel-radio-show-4-1-1", function(done){
+                testSample("solid-steel-radio-show-4-1-1.html", "solid-steel-radio-show-4-1-1.artists", done);
+            });
+
+            it("can parse solid-steel-radio-show-21-12", function(done){
+                testSample("solid-steel-radio-show-21-12.html", "solid-steel-radio-show-21-12.artists", done);
+
+            });
+
         });
 
    });
