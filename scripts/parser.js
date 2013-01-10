@@ -60,14 +60,14 @@ define(["jquery", "underscore"],function($,_){
             var m = match(content,/^([^\_]+)\_/gi);
             if(m){ return m[1]; }
         },
-        //The Beatles - The End - Apple Records
+        //[10.] The Beatles - The End - Apple Records
         function(content){
-            var m = match(content,/^([^-]+)-\s*[^-]+-\s*.+$/gi);
+            var m = match(content,/^[0-9]*\.*\s*([^-]+)-\s*[^-]+-\s*.+$/gi);
             if(m){ return m[1]; }
         },
-        //Funk Factory - Rien Ne Va Plus (ATCO Records)
+        //[10.] Funk Factory - Rien Ne Va Plus (ATCO Records)
         function(content){
-            var m = match(content,/^(.{1,50}?)-\s*[^-]+$/gi);
+            var m = match(content,/^[0-9]*\.*\s*(.{1,50}?)-\s*[^-]+$/gi);
             if(m){ return m[1]; }
         },
     ];
