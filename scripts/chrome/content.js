@@ -70,7 +70,8 @@
             for(var i=0; i<sections.length; i++){
                 var html = sections[i].innerHTML;
                 for(var j=0; j<artists.length; j++){
-                    html = html.replace(htmlEscape(artists[j]), formatArtist(artists[j]));
+                    html = html.replace(new RegExp(htmlEscape(artists[j]), "g"), 
+                        formatArtist(artists[j]));
                 }
 
                 sections[i].innerHTML = html;
