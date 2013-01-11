@@ -1,4 +1,4 @@
-define(["models/soundcloud.search","soundcloud"], function(Search,SC){
+define(["models/soundcloud.search","soundcloud","underscore"], function(Search,SC,_){
     describe("Soundcloud Search",function(){
         
         describe("module", function(){
@@ -15,6 +15,17 @@ define(["models/soundcloud.search","soundcloud"], function(Search,SC){
 
         describe("findArtist", function(){
 
+            /*
+                Load sample search results from searches directory
+            */
+            function searchResults(query, done){
+                require(["text!../searches/"+query+".json"],function(s){                    
+                    if(typeof done !== 'undefined'){
+                        done(JSON.parse(s));   
+                    }
+                });
+            }
+
             it("hits SC's search with a query", function(done){
                 
                 var searchTerm = 'High Contrast';
@@ -28,7 +39,6 @@ define(["models/soundcloud.search","soundcloud"], function(Search,SC){
             });
 
             it("returns one artist if she's on soundcloud", function(){
-                //TODO
             });
 
             it("returns nothing if the artist is NOT on soundcloud", function(){
