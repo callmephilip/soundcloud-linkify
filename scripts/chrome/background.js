@@ -18,7 +18,7 @@ require.config({
   }
 });
  
-require(['jquery','parser'], function($,Parser) {
+require(['jquery','parser', 'decorator'], function($,Parser,Decorator) {
 
     function testing(){
         return $("#mocha").length !== 0;
@@ -26,15 +26,7 @@ require(['jquery','parser'], function($,Parser) {
 
     //schedule tab inspection
     function inspect(tab){
-        chrome.tabs.sendMessage(tab.id, { what : "inspect" }, function(response){
-            
-            var artists = Parser.parse(response);
-
-            console.log("got content", response);
-            console.log("artists identified", artists);
-            
-            chrome.tabs.sendMessage(tab.id, { what : "artists",  data : artists }); 
-        });
+        chrome.tabs.sendMessage(tab.id, { what : "inspect" });
     }
 
 
@@ -76,12 +68,30 @@ require(['jquery','parser'], function($,Parser) {
     }
 
     if(!testing()){
+
         // content script pings background asking it to start the app
         chrome.extension.onRequest.addListener(function(request, sender, sendResponse){
             sendResponse({});
             chrome.tabs.getSelected(null,function(t){
                 run(t);
             });
+        });
+
+        //content script is talking back
+        chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
+                
+            // content script sends over html to decorate
+            if(request.what === "decorate"){
+                console.log("BG: got decoration request",request);
+                
+                var artists = Parser.parse(request.data);
+
+                console.log("got content", request.data);
+                console.log("artists identified", artists);
+            
+                //update page content and send it back
+                sendResponse(Decorator.decorate(request.data, artists));
+            }
         });
     }
 });

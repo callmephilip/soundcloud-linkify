@@ -27,55 +27,29 @@
         return results;
     }
 
-    //convert plain text containing artist's name into something less plain
-    function formatArtist(name){
-        return '<span style="color:red;">'+ name +'</span>';
-    }
-
     //background is calling
     chrome.extension.onMessage.addListener(function(msg, _, sendResponse) {
         console.log("Got message from background page: ", msg);
     
+        function askForDecoration(el){
+            chrome.extension.sendMessage({what: "decorate", data : el.innerHTML}, function(response) {
+              el.innerHTML = response;
+            });
+        }
+
 
         if(msg.what === 'inspect'){
-            setTimeout(function(){
-                var content = findContent(), textContent = [];
+            setTimeout(function(){                
+                //for every single chunk of content, send a 'decorate' request
+                var content = findContent();
 
                 for(var i=0; i<content.length; i++){
-                    textContent.push(content[i].innerHTML);
+                    askForDecoration(content[i]);
                 }
 
-                sendResponse(textContent);
-                console.log(content);
             }, 5000);
 
             return true;
-        }
-
-        if(msg.what === "artists"){
-
-            function htmlEscape(str) {
-                return String(str)
-                        .replace(/&/g, '&amp;')
-                        .replace(/"/g, '&quot;')
-                        .replace(/'/g, '&#39;')
-                        .replace(/</g, '&lt;')
-                        .replace(/>/g, '&gt;');
-            }
-
-            console.log("got artists from the background", msg.data);
-
-            var sections = findContent(), artists = msg.data;
-
-            for(var i=0; i<sections.length; i++){
-                var html = sections[i].innerHTML;
-                for(var j=0; j<artists.length; j++){
-                    html = html.replace(new RegExp(htmlEscape(artists[j]), "g"), 
-                        formatArtist(artists[j]));
-                }
-
-                sections[i].innerHTML = html;
-            } 
         }
 
     });
