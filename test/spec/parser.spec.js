@@ -41,6 +41,14 @@ define(["parser","underscore"], function(Parser,_){
 
                     expect(_.uniq(results).length).to.equal(results.length);
 
+                    // 0 < artist names length <= 50
+
+                    console.log("checking results sizes");
+
+                    expect(_.filter(results,function(r){ 
+                        return (r.length >= 50) || (r.length == 0);
+                    }).length).to.equal(0);
+
                     done();
                 });
             }
@@ -85,6 +93,10 @@ define(["parser","underscore"], function(Parser,_){
 
             it("can parse david-guetta-dj-mix-119", function(done){
                 testSample("david-guetta-dj-mix-119.html", "david-guetta-dj-mix-119.artists", done);
+            });
+
+            it("can parse solid-steel-radio-show-4-1-3", function(done){
+                testSample("solid-steel-radio-show-4-1-3.html", "solid-steel-radio-show-4-1-3.artists", done);
             });
 
         });

@@ -99,7 +99,7 @@ define(["jquery", "underscore"],function($,_){
                 }  
             } 
 
-            return _.uniq(results);            
+            return _.filter(_.uniq(results), function(r){ return (r.length > 0) && (r.length <= 50); });            
         }
     };
 });
