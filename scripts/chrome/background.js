@@ -11,7 +11,9 @@ require.config({
     'underscore': 'vendor/underscore',
     'backbone': 'vendor/backbone',
     'handlebars': 'vendor/handlebars',
-    'text': 'vendor/text' 
+    'text': 'vendor/text',
+    'soundcloud': 'vendor/soundcloud', 
+    'models' : 'models'
   }
 });
  
