@@ -21,12 +21,16 @@ require(['jquery','parser'], function($,Parser) {
         return $("#mocha").length !== 0;
     }
 
-
     //schedule tab inspection
     function inspect(tab){
         chrome.tabs.sendMessage(tab.id, { what : "inspect" }, function(response){
+            
+            var artists = Parser.parse(response);
+
             console.log("got content", response);
-            console.log("artists identified", Parser.parse(response));
+            console.log("artists identified", artists);
+            
+            chrome.tabs.sendMessage(tab.id, { what : "artists",  data : artists }); 
         });
     }
 
