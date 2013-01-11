@@ -1,4 +1,4 @@
-define(["models/soundcloud.search","soundcloud","underscore"], function(Search,SC,_){
+define(["models/soundcloud.search","soundcloud","underscore","jquery"], function(Search,SC,_,$){
     describe("Soundcloud Search",function(){
         
         describe("module", function(){
@@ -14,6 +14,12 @@ define(["models/soundcloud.search","soundcloud","underscore"], function(Search,S
         });
 
         describe("findArtist", function(){
+
+            afterEach(function(){
+                if(typeof SC.get.restore !== 'undefined'){
+                    SC.get.restore();
+                }
+            });
 
             /*
                 Load sample search results from searches directory
@@ -38,13 +44,24 @@ define(["models/soundcloud.search","soundcloud","underscore"], function(Search,S
                 Search.findArtist(searchTerm);
             });
 
-            it("returns one artist if she's on soundcloud", function(){
-            });
+            it("returns one artist if she's on soundcloud", function(done){
+                
+                var searchTerm = "nero";
 
-            it("returns nothing if the artist is NOT on soundcloud", function(){
-                //TODO
-            });
+                sinon.stub(SC, 'get', function(url,callback){
+                    searchResults(searchTerm, function(r){
+                        callback(r); 
+                    });
+                });
 
+                $.when(Search.findArtist(searchTerm)).done(function(artist){
+                    expect(artist).to.be.ok;
+                    expect(artist.length).to.not.be.ok;
+                    expect(artist.kind).to.equal('user');
+                    done();
+                });
+
+            });
         });
 
     });

@@ -3,7 +3,7 @@
         -- currently filters search results to only include tracks 
 */
 
-define(["underscore", "models/soundcloud.base"], function(_,SouncloudModels){
+define(["underscore", "models/soundcloud.base","jquery"], function(_,SouncloudModels,$){
 
     var ArtistSearchCollection = SouncloudModels.Collection.extend({
         parse: function(response) {
@@ -13,23 +13,20 @@ define(["underscore", "models/soundcloud.base"], function(_,SouncloudModels){
 
 
     return {
-        // search : function(query){
-        //     if(typeof query !== 'undefined'){
-        //         var c = this.newSearchCollection("/search?q=" + encodeURIComponent(query));
-        //         return c.fetch();
-        //     }
-        // },
+        
 
         findArtist : function(name){
-            var c = new ArtistSearchCollection();
+            var c = new ArtistSearchCollection(), dfd = $.Deferred();
             c.url = "/search?q=" + encodeURIComponent(name);
-            return c.fetch();
+            $.when(c.fetch()).done(function(r){
+                if(r.models.length !== 0){
+                    dfd.resolve(r.models[0].toJSON());
+                }else{
+                    dfd.reject();
+                }
+            });
+            return dfd.promise();
         }
 
-        // newSearchCollection : function(url){
-        //     var c = new SoundCloudSearchCollection();
-        //     c.url = url;
-        //     return c;
-        // }
     };
 });
