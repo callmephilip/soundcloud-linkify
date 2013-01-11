@@ -3,7 +3,8 @@ require.config({
   shim: {
     'underscore' : { exports : '_' },
     'backbone' : { deps : ['underscore'], exports : 'Backbone' },
-    'handlebars' : { exports : 'Handlebars' }
+    'handlebars' : { exports : 'Handlebars' },
+    'soundcloud' : { exports: 'SC' }
   },
 
   paths: {
