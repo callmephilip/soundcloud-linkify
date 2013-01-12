@@ -1,4 +1,4 @@
-define(["jquery", "underscore"],function($,_){
+define(["jquery", "underscore", "xregexp"],function($,_,XRegExp){
 
     //convert plain text containing artist's name into something less plain
     function formatArtist(artist){
@@ -14,23 +14,26 @@ define(["jquery", "underscore"],function($,_){
                 .replace(/>/g, '&gt;');
     }
 
-    function doNotBreakHtmlRegExp(str){
+    function doNotBreakHtmlRegExp(str,artist){
         /*
             Avoid the following
                 - inject things in the middle of a url
         */
-        return new RegExp("(?=[^/']+)" + htmlEscape(str), // + "(?=[^/']+)", 
-            "gi");
-
-        //eplace(/(?=[^/']+)(bob)(?=[^/']+)/gi,"New Bob")
+        
+        return XRegExp.replaceLb(str, 
+            "(?i)(?<!['\"/])", new RegExp(artist+"(?!['\"/])","gi"), formatArtist(artist)
+        );
     }
 
     return {
         decorate : function(content, artists){
+
+            console.log(XRegExp);
+
             for(var j=0; j<artists.length; j++){
-                content = content.replace(doNotBreakHtmlRegExp(artists[j]),formatArtist(artists[j]));
+                content = doNotBreakHtmlRegExp(content,artists[j]);
             }
-            
+
             return content;
         } 
     };
