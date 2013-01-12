@@ -2,7 +2,7 @@ define(["jquery", "underscore", "xregexp"],function($,_,XRegExp){
 
     //convert plain text containing artist's name into something less plain
     function formatArtist(artist){
-        return '<span style="color:red;">' + artist + '</span>';
+        return '<span style="color:red;">' + artist.originalName + '</span>';
     }
 
     function htmlEscape(str) {
@@ -21,14 +21,12 @@ define(["jquery", "underscore", "xregexp"],function($,_,XRegExp){
         */
         
         return XRegExp.replaceLb(str, 
-            "(?i)(?<!['\"/])", new RegExp(artist+"(?!['\"/])","gi"), formatArtist(artist)
+            "(?i)(?<!['\"/])", new RegExp(artist.originalName+"(?!['\"/])","gi"), formatArtist(artist)
         );
     }
 
     return {
         decorate : function(content, artists){
-
-            console.log(XRegExp);
 
             for(var j=0; j<artists.length; j++){
                 content = doNotBreakHtmlRegExp(content,artists[j]);
