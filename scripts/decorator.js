@@ -1,8 +1,20 @@
-define(["jquery", "underscore", "xregexp"],function($,_,XRegExp){
+define(["jquery", "underscore", "xregexp"],
+    function($,_,XRegExp){
 
     //convert plain text containing artist's name into something less plain
     function formatArtist(artist){
-        return '<span style="color:red;">' + artist.originalName + '</span>';
+        
+        return jQuery("<div>").append(
+            jQuery("<span>")
+                .append(
+                    jQuery("<a>").html(artist.originalName).attr("href",artist.data.permalink_url)
+                )
+                .css('color','red')
+        ).html();
+
+        //return _.template(decorationTemplate, artist);
+        //return Handlebars.compile(decorationTemplate)(artist);
+        //return '<span style="color:red;">' + artist.originalName + '</span>';
     }
 
     function htmlEscape(str) {
