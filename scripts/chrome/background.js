@@ -4,7 +4,8 @@ require.config({
     'underscore' : { exports : '_' },
     'backbone' : { deps : ['underscore'], exports : 'Backbone' },
     'handlebars' : { exports : 'Handlebars' },
-    'soundcloud' : { exports: 'SC' }
+    'soundcloud' : { exports: 'SC' },
+    'xregexp' : { exports : 'XRegExp'}
   },
 
   paths: {
@@ -14,6 +15,7 @@ require.config({
     'handlebars': 'vendor/handlebars',
     'text': 'vendor/text',
     'soundcloud': 'vendor/soundcloud', 
+    'xregexp': 'vendor/xregexp',
     'models' : 'models'
   }
 });
