@@ -22,7 +22,7 @@ define(["underscore", "models/soundcloud.base","jquery"], function(_,SouncloudMo
                 if(r.models.length !== 0){
                     dfd.resolve(r.models[0].toJSON());
                 }else{
-                    dfd.reject();
+                    dfd.resolve(null);
                 }
             });
             return dfd.promise();
