@@ -20,7 +20,7 @@ require.config({
   }
 });
  
-require(['jquery','parser', 'decorator'], function($,Parser,Decorator) {
+require(['jquery','parser','decorator','verifier', 'soundcloud'], function($,Parser,Decorator,Verifier,SC) {
 
     function testing(){
         return $("#mocha").length !== 0;
@@ -71,6 +71,16 @@ require(['jquery','parser', 'decorator'], function($,Parser,Decorator) {
 
     if(!testing()){
 
+        function getSoundCloudSettings(){
+            return { //production settings
+                client_id: "75183d3e642d5c008a5fa0d33a6e7da5",
+                redirect_uri: "http://callmephilip.github.com/stacks/soundcloud.callback.html"
+            }
+        }
+
+        // get the soundcloud goodness ready go
+        SC.initialize(getSoundCloudSettings());
+
         // content script pings background asking it to start the app
         chrome.extension.onRequest.addListener(function(request, sender, sendResponse){
             sendResponse({});
@@ -90,9 +100,17 @@ require(['jquery','parser', 'decorator'], function($,Parser,Decorator) {
 
                 console.log("got content", request.data);
                 console.log("artists identified", artists);
-            
-                //update page content and send it back
-                sendResponse(Decorator.decorate(request.data, artists));
+
+                //check every single identified artist against SC to get additional data
+
+                Verifier.verify(artists, function(verifiedArtists){
+                    console.log("got verified artists", verifiedArtists);
+
+                    //update page content and send it back
+                    sendResponse(Decorator.decorate(request.data, verifiedArtists));
+                });
+
+                return true;
             }
         });
     }
