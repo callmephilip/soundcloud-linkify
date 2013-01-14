@@ -106,6 +106,10 @@ require(['jquery','parser','decorator','verifier', 'soundcloud'], function($,Par
                 Verifier.verify(artists, function(verifiedArtists){
                     console.log("got verified artists", verifiedArtists);
 
+                    if(verifiedArtists.length !== 0){
+                        chrome.pageAction.show(sender.tab.id);
+                    }
+
                     //update page content and send it back
                     sendResponse(Decorator.decorate(request.data, verifiedArtists));
                 });
