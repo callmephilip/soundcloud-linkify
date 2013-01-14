@@ -27,6 +27,18 @@
         return results;
     }
 
+    var Loader = {
+
+        show : function(el){
+            el.classList.add("soundcloud-linkify-working");
+        },
+
+        hide : function(el){
+            el.classList.remove("soundcloud-linkify-working");
+        }
+
+    };
+
     //background is calling
     chrome.extension.onMessage.addListener(function(msg, _, sendResponse) {
         console.log("Got message from background page: ", msg);
@@ -34,6 +46,7 @@
         function askForDecoration(el){
             chrome.extension.sendMessage({what: "decorate", data : el.innerHTML}, function(response) {
               el.innerHTML = response;
+              Loader.hide(el);
             });
         }
 
@@ -44,6 +57,7 @@
                 var content = findContent();
 
                 for(var i=0; i<content.length; i++){
+                    Loader.show(content[i]);
                     askForDecoration(content[i]);
                 }
 
