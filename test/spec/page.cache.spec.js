@@ -65,6 +65,26 @@ define(["models/page.cache","underscore"], function(PageCache,_){
                 localStorage.setItem(pageUrl,"this-is-page-content");
                 expect(PageCache.get(pageUrl)).to.be.ok;
             });
+
+            it("normalizes url before using it", function(done){
+
+                var urls = [
+                    pageUrl + "#cutthisout",
+                    pageUrl + "?cutthisout"
+                ];
+
+                sinon.stub(localStorage, "getItem", function(url){
+                    expect(url).to.equal(pageUrl);
+                    if(urls.length === 0){
+                        done();
+                    }
+                });
+
+                while(urls.length !== 0){
+                    PageCache.get(urls.pop());
+                }
+
+            });
         });
 
 
@@ -113,6 +133,26 @@ define(["models/page.cache","underscore"], function(PageCache,_){
                 });
 
                 expect(PageCache.set(pageUrl,pageContent)).to.not.be.ok;
+            });
+
+            it("normalizes url before using it", function(done){
+
+                var urls = [
+                    pageUrl + "#cutthisout",
+                    pageUrl + "?cutthisout"
+                ];
+
+                sinon.stub(localStorage, "setItem", function(url){
+                    expect(url).to.equal(pageUrl);
+                    if(urls.length === 0){
+                        done();
+                    }
+                });
+
+                while(urls.length !== 0){
+                    PageCache.set(urls.pop(),pageContent);
+                }
+
             });
 
         });

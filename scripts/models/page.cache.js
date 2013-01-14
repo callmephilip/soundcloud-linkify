@@ -6,17 +6,28 @@ define([], function(){
         );
     }
 
+    function __normalizeUrl(url){
+        /* 
+            Normalization
+
+                http://google.com/hello/?v1=3 -> http://google.com/hello/
+                http://google.com/hello/#v1=3 -> http://google.com/hello/
+        */
+
+        var m = /([^#\?])+/gi.exec(url);
+        return m[0];
+    }
+
     return {
 
         get : function(url){
             if(!__isUrl(url || "")){ throw new Error("No url provided"); }
             
             try{
-                return localStorage.getItem(url);    
+                return localStorage.getItem(__normalizeUrl(url));    
             }catch(e){
                 return null;
             }
-            
         },
 
         set : function(url, content){
@@ -25,7 +36,7 @@ define([], function(){
             }
 
             try{
-                localStorage.setItem(url,content);
+                localStorage.setItem(__normalizeUrl(url),content);
             }catch(e){
                 return null;
             }
