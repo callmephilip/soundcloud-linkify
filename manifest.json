@@ -22,7 +22,8 @@
       "matches" : [
         "http://soundcloud.com/*", "https://soundcloud.com/*"
       ],
-      "js" : ["scripts/chrome/content.js"],
+      "js"  : ["scripts/chrome/content.js"],
+      "css" : ["styles/inject.css"],
       "run_at" : "document_idle",
       "all_frames" : false
     }
