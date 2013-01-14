@@ -3,7 +3,6 @@ define(["jquery", "underscore", "xregexp"],
 
     //convert plain text containing artist's name into something less plain
     function formatArtist(artist){
-        
         return jQuery("<div>").append(
             jQuery("<span>")
                 .append(
@@ -11,10 +10,6 @@ define(["jquery", "underscore", "xregexp"],
                 )
                 .css('color','red')
         ).html();
-
-        //return _.template(decorationTemplate, artist);
-        //return Handlebars.compile(decorationTemplate)(artist);
-        //return '<span style="color:red;">' + artist.originalName + '</span>';
     }
 
     function htmlEscape(str) {
