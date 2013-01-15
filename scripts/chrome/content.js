@@ -39,35 +39,69 @@
 
     };
 
-    //background is calling
-    chrome.extension.onMessage.addListener(function(msg, _, sendResponse) {
-        console.log("Got message from background page: ", msg);
-    
-        function askForDecoration(el){
-            chrome.extension.sendMessage({what: "decorate", data : el.innerHTML}, function(response) {
-              el.innerHTML = response;
-              Loader.hide(el);
-            });
-        }
+    function askForDecoration(el){
 
+        el.setAttribute('data-soundcloud-linkify',true);
 
-        if(msg.what === 'inspect'){
-            setTimeout(function(){                
-                //for every single chunk of content, send a 'decorate' request
-                var content = findContent();
+        chrome.extension.sendMessage({what: "decorate", data : el.innerHTML}, function(response) {
+          el.innerHTML = response;
+          Loader.hide(el);
+        });
+    }
 
-                for(var i=0; i<content.length; i++){
-                    Loader.show(content[i]);
-                    askForDecoration(content[i]);
+    var UrlTracker = {
+
+        start : function(){
+            var that = this;
+            setInterval(function(){
+                if(window.location.href !== that.url){
+                    console.log("url changed",window.location.href);
+                    that.url = window.location.href;
+                    if(typeof that.onChange !== 'undefined'){
+                        that.onChange();
+                    }
                 }
+            },100);
+        },
 
-            }, 5000);
-
-            return true;
+        onChange : function(){
         }
 
-    });
+    };
 
-    // get the background script going
-    chrome.extension.sendRequest({}, function(response) {});
+    (function(maxDOMTries, checkFrequency){
+        var DOMCheckInterval;
+
+        UrlTracker.onChange = function(){
+            
+            if(typeof DOMCheckInterval !== 'undefined'){
+                clearInterval(DOMCheckInterval);
+            }
+
+            var numberOfTries = 0; 
+
+            DOMCheckInterval = setInterval(function(){
+                numberOfTries++;
+
+                console.log("Trying DOM : ", numberOfTries);
+
+                if(numberOfTries >= maxDOMTries){ clearInterval(DOMCheckInterval); }
+
+                var content = findContent();        
+                
+                if(content.length !== 0){
+                    for(var i=0; i<content.length; i++){
+                        if(!content[i].getAttribute('data-soundcloud-linkify')){
+                            Loader.show(content[i]);
+                            askForDecoration(content[i]);
+                            clearInterval(DOMCheckInterval);
+                        }
+                    }
+                }
+            },checkFrequency); 
+        };
+
+        UrlTracker.start();
+    })(10,500);
+
 })();
