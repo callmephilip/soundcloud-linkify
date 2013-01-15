@@ -23,6 +23,8 @@ define(['jquery','underscore','models/soundcloud.search'], function($,_,Search){
                 if(typeof done !== 'undefined'){
                     done(verifiedArtists);
                 }
+            }).fail(function(){
+                console.error("verifier failed");
             });
         }
 
