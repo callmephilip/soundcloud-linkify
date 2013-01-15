@@ -12,3 +12,7 @@ a.soundcloud-linkify{
     border: solid 1px #CCC; border-radius: 3px;
     padding-left: 20px; padding-right: 3px;
 }
+
+a.soundcloud-linkify:hover{
+    background-color: #FCFCFC;
+};
