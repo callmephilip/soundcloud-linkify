@@ -4,3 +4,11 @@
     background-position: 100% 0%;
     padding-top: 21px;
 }
+
+a.soundcloud-linkify{
+    background-size: 15px 15px;
+    background-repeat: no-repeat;
+    background-position: 2px 2px;
+    border: solid 1px #CCC; border-radius: 3px;
+    padding-left: 20px; padding-right: 3px;
+}

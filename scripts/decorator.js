@@ -4,11 +4,13 @@ define(["jquery", "underscore", "xregexp"],
     //convert plain text containing artist's name into something less plain
     function formatArtist(artist){
         return jQuery("<div>").append(
-            jQuery("<span>")
-                .append(
-                    jQuery("<a>").html(artist.originalName).attr("href",artist.data.permalink_url)
-                )
-                .css('color','red')
+            
+            jQuery("<a>").html(artist.originalName)
+                .attr("href",artist.data.permalink_url)
+                .attr("class","soundcloud-linkify")
+                .attr("target","_blank")
+                .css("background-image","url('" + artist.data.avatar_url + "')")
+
         ).html();
     }
 
