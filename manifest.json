@@ -2,7 +2,7 @@
   "name": "Soundcloud Linkify",
   "version": "0.1",
   "manifest_version": 2,
-  "description": "Identify artists in tracklists for mixes and link to their Soundcloud pages",
+  "description": "Soundcloud Linkify identifies artists in tracklists for mixes and link to their Soundcloud pages",
 
   "icons": { 
     "16": "images/icon-16.png",
