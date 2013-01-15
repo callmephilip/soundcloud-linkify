@@ -3,6 +3,9 @@ Soundcloud Linkify is a Chrome Extension that identifies artists mentioned in tr
 
 ![screenshot](https://dl.dropbox.com/u/9224326/www/soundcloud-linkify/images/shot.png)
  
+### Known Issues
+For some reason Chrome Store will not install the extension correctly unless you are logged in with your Google Account so you might want to do that before trying to install it.
+ 
 ### Authors and Contributors
 Built with love by @callmephilip. Icon by [Matthew Exton](http://thenounproject.com/owl4life1867) 
 
