@@ -1,6 +1,6 @@
 {
   "name": "SoundCloud Linkify",
-  "version": "0.2",
+  "version": "0.3",
   "manifest_version": 2,
   "description": "SoundCloud Linkify identifies artists in tracklists for mixes and links to their SoundCloud pages",
 
